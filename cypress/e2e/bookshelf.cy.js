@@ -9,7 +9,7 @@ describe('Bookshelf tests', () => {
       })
   })
 
-  it.only('should add book to the bookshelf', () => {
+  it('should add book to the bookshelf', () => {
     let book = 'book ' + Math.floor(Math.random() * 100000)
     cy.addBook(book, 
     "teste", 
@@ -23,6 +23,7 @@ describe('Bookshelf tests', () => {
       const dec = new TextDecoder();
       //console.log(JSON.parse(dec.decode(response.body)))
       const responseJSON = JSON.parse(dec.decode(response.body))
+      console.log(responseJSON.book.id)
       expect(response.status).equal(200)
       expect(responseJSON.message).equal("Livro adicionado com sucesso")
     })
@@ -43,11 +44,18 @@ describe('Bookshelf tests', () => {
     })
   })
 
-  it('should delete book from the bookshelf', () => {
-    cy.deleteBook(3).then((response)=>{
-      expect(response.status).equal(200)
-      expect(response.body.message).equal("Livro deletado com sucesso")
-    })
+  it.only('should delete book from the bookshelf', () => {
+    cy.addBook("book to delete", "test", "test", 2000, "test", "test", 100, "test")
+      .then(response=>{
+        let dec = new TextDecoder();
+        let responseJSON = JSON.parse(dec.decode(response.body))
+        let id = responseJSON.book.id
+
+        cy.deleteBook(id).then((response)=>{
+          expect(response.status).equal(200)
+          expect(response.body.message).equal("Livro deletado com sucesso")
+        })
+      })
   });
 })
 

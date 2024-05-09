@@ -6,14 +6,14 @@ Cypress.Commands.add('getAllBooks', ()=>{
 })
 
 Cypress.Commands.add('addBook', (name, description, author, year, publisher, genre, pagecount, lang)=>{
-    cy.fixture('teste.png', 'binary').then( image =>{
+    cy.fixture('teste1.png', 'binary').then( image =>{
         const blob = Cypress.Blob.binaryStringToBlob(image, "image/png")
         const formData = new FormData()
         formData.append("name", name)
         formData.append("description", description)
         formData.append("author", author)
         formData.append("year", year)
-        formData.append("image", blob, 'teste.png')
+        formData.append("image", blob, 'teste1.png')
         formData.append("publisher", publisher)
         formData.append("genre", genre)
         formData.append("pagecount", pagecount)
