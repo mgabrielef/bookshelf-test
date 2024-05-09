@@ -9,13 +9,16 @@ describe('Bookshelf tests', () => {
       })
   })
 
-  it('should add book to the bookshelf', () => {
+  it.only('should add book to the bookshelf', () => {
     let book = 'book ' + Math.floor(Math.random() * 100000)
     cy.addBook(book, 
-    "Teste8", 
+    "teste", 
     book, 
     2000, 
-    book
+    book,
+    "teste",
+    100,
+    "teste"
     ).then((response)=>{
       const dec = new TextDecoder();
       //console.log(JSON.parse(dec.decode(response.body)))
