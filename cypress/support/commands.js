@@ -25,8 +25,9 @@ Cypress.Commands.add('addBook', (name, description, author, year, publisher, gen
             headers: {
                 'content-type': 'multipart/form-data',
             },
-            body: formData
-        })
+            body: formData,
+            failOnStatusCode: false
+        })    
     })
 })
 
