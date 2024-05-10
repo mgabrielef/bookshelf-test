@@ -5,6 +5,13 @@ Cypress.Commands.add('getAllBooks', ()=>{
     })
 })
 
+Cypress.Commands.add('getBookById', (id)=>{
+    cy.request({
+        method: 'GET',
+        url: `api/addedBook/${id}`
+    })
+})
+
 Cypress.Commands.add('addBook', (name, description, author, year, publisher, genre, pagecount, lang)=>{
     cy.fixture('teste1.png', 'binary').then( image =>{
         const blob = Cypress.Blob.binaryStringToBlob(image, 'image/png')

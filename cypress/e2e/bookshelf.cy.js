@@ -9,6 +9,14 @@ describe('Bookshelf tests', () => {
       })
   })
 
+  it.only('should return book by its id', () => {
+    cy.getBookById(21).then((response)=>{
+      expect(response.status).equal(200)
+      console.log(response.body[0].id)
+      expect(response.body[0]).to.have.property('id')
+    })
+  });
+
   it('should add book to the bookshelf', () => {
     let book = 'book ' + Math.floor(Math.random() * 100000)
     cy.addBook(book, 
@@ -39,7 +47,7 @@ describe('Bookshelf tests', () => {
       })
   })
 
-  it.only('should edit book\'s info', () => {
+  it('should edit book\'s info', () => {
     let book = 'book ' + Math.floor(Math.random() * 100000)
     cy.addBook(book, 'test', book, 2000, book, 'test', 100, 'test')
       .then(response=>{
