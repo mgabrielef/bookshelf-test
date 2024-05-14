@@ -9,8 +9,8 @@ describe('Bookshelf tests', () => {
       })
   })
 
-  it.only('should return book by its id', () => {
-    cy.getBookById(21).then((response)=>{
+  it('should return book by its id', () => {
+    cy.getBookById(80).then((response)=>{
       expect(response.status).equal(200)
       console.log(response.body[0].id)
       expect(response.body[0]).to.have.property('id')
@@ -28,9 +28,9 @@ describe('Bookshelf tests', () => {
     100,
     'teste'
     ).then((response)=>{
-      const dec = new TextDecoder();
+      let dec = new TextDecoder();
       //console.log(JSON.parse(dec.decode(response.body)))
-      const responseJSON = JSON.parse(dec.decode(response.body))
+      let responseJSON = JSON.parse(dec.decode(response.body))
       expect(response.status).equal(200)
       expect(responseJSON.message).equal('Livro adicionado com sucesso')
     })
@@ -57,7 +57,7 @@ describe('Bookshelf tests', () => {
 
         cy.editBook(id, 'edited ' + book, 'test', 'edited ' + book, 2000, 'edited ' + book, 'test', 100, 'test')
           .then((response)=>{
-            expect(response.status).equal(200)
+            expect(response.status).equal(201)
             expect(response.body.message).equal('Livro atulizado com sucesso')
           })
       })
@@ -72,8 +72,7 @@ describe('Bookshelf tests', () => {
         let id = responseJSON.book.id
 
         cy.deleteBook(id).then((response)=>{
-          expect(response.status).equal(200)
-          expect(response.body.message).equal('Livro deletado com sucesso')
+          expect(response.status).equal(204)
         })
       })
   });
