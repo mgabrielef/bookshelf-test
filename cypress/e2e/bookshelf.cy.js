@@ -77,7 +77,7 @@ describe('Bookshelf tests', () => {
       })
   });
 
-  it.only('should add book to a collection in the bookshelf', () => {
+  it('should add book to a collection in the bookshelf', () => {
     let book = 'book ' + Math.floor(Math.random() * 100000)
     cy.addBookToCollection(book, 
     'teste', 
@@ -96,4 +96,18 @@ describe('Bookshelf tests', () => {
       expect(responseJSON.message).equal('Livro adicionado com sucesso')
     })
   })
+
+  it.only('should return books from a collection', () => {
+    let collection = 'collection' + Math.floor(Math.random() * 100000)
+
+    for(let i = 0; i<3; i++){
+      let book = 'book ' + Math.floor(Math.random() * 100000)
+      cy.addBookToCollection(book, 'teste', book, 2000, book, 'teste', 100, 'teste', collection)
+    }
+
+    cy.request(`api/books/${collection}`).then((response)=>{
+      expect(response.body).to.have.property('livros')
+      expect(response.body.coleção.volumecount).equal(3)
+    })
+  });
 })
