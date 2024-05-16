@@ -31,7 +31,7 @@ describe('Bookshelf tests', () => {
       let dec = new TextDecoder();
       //console.log(JSON.parse(dec.decode(response.body)))
       let responseJSON = JSON.parse(dec.decode(response.body))
-      expect(response.status).equal(200)
+      expect(response.status).equal(201)
       expect(responseJSON.message).equal('Livro adicionado com sucesso')
     })
   })
@@ -57,8 +57,8 @@ describe('Bookshelf tests', () => {
 
         cy.editBook(id, 'edited ' + book, 'test', 'edited ' + book, 2000, 'edited ' + book, 'test', 100, 'test')
           .then((response)=>{
-            expect(response.status).equal(201)
-            expect(response.body.message).equal('Livro atulizado com sucesso')
+            expect(response.status).equal(200)
+            expect(response.body.message).equal('Livro atualizado com sucesso')
           })
       })
   });
@@ -76,5 +76,24 @@ describe('Bookshelf tests', () => {
         })
       })
   });
-})
 
+  it.only('should add book to a collection in the bookshelf', () => {
+    let book = 'book ' + Math.floor(Math.random() * 100000)
+    cy.addBookToCollection(book, 
+    'teste', 
+    book, 
+    2000, 
+    book,
+    'teste',
+    100,
+    'teste',
+    'teste'
+    ).then((response)=>{
+      let dec = new TextDecoder();
+      //console.log(JSON.parse(dec.decode(response.body)))
+      let responseJSON = JSON.parse(dec.decode(response.body))
+      expect(response.status).equal(201)
+      expect(responseJSON.message).equal('Livro adicionado com sucesso')
+    })
+  })
+})

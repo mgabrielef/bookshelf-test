@@ -61,3 +61,30 @@ Cypress.Commands.add('deleteBook', (id)=>{
         url: `api/book/${id}`
     })
 })
+
+Cypress.Commands.add('addBookToCollection', (name, description, author, year, publisher, genre, pagecount, lang, collection_name)=>{
+    cy.fixture('teste.png', 'binary').then( image =>{
+        const blob = Cypress.Blob.binaryStringToBlob(image, 'image/png')
+        const formData = new FormData()
+        formData.append('name', name)
+        formData.append('description', description)
+        formData.append('author', author)
+        formData.append('year', year)
+        formData.append('image', blob, 'teste.png')
+        formData.append('publisher', publisher)
+        formData.append('genre', genre)
+        formData.append('pagecount', pagecount)
+        formData.append('lang', lang)
+        formData.append('collection_name', collection_name)
+
+        cy.request({
+            method: 'POST',
+            url: 'api/book',
+            headers: {
+                'content-type': 'multipart/form-data',
+            },
+            body: formData,
+            failOnStatusCode: false
+        })    
+    })
+})
